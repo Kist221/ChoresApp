@@ -23,6 +23,7 @@ App for creating to do lists shared between users.
 
   after successful login, store current user in LocalStorage
   
+  Logout button redirects and clears localStorage Username
 
 # Application Page  - Dragon Rolls
 
