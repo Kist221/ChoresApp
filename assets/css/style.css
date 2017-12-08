@@ -1,0 +1,10 @@
+
+/*Lets attempt to use just one stylesheet for both pages. Use CSS specificity!!!*/
+
+h1, h2, h3, h6, p, li, form, label, div {
+	font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+}
+
+body {
+	background: lightgrey;
+}
