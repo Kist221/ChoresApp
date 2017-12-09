@@ -1,5 +1,21 @@
 // Javascript for App Page
 
+
+
+// Initialize Firebase
+ var config = {
+   apiKey: "AIzaSyCVB25IfiYdoecRxag3WQlxtFkBAzqbcYs",
+   authDomain: "choresapp-18a57.firebaseapp.com",
+   databaseURL: "https://choresapp-18a57.firebaseio.com",
+   projectId: "choresapp-18a57",
+   storageBucket: "choresapp-18a57.appspot.com",
+   messagingSenderId: "451640314490"
+ };
+ 
+ firebase.initializeApp(config);
+
+
+
     // Create an initial choreCount variable
     var choreCount = 0;
 
