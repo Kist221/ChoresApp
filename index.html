@@ -1,23 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Login Page</title>
+	<title>Application Page</title>
 	<!-- reset CSS -->
 	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
-	<!-- bootstrap -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 	<!-- login CSS -->
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 	<!-- jquery  -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+	<style>
+      #chore-list {
+        font-weight: 700;
+        font-size: 2em;
+      }
+    </style>
+
+
 </head>
 <body>
+<!-- OUR AWESOME APP GOES HERE -->
 
-	<!-- LOGIN Y'ALL -->
+	    <!-- My Chore List -->
+    <div id="mychore-list"></div>
+
+    <form>
+      <span id="chore-list">Add Chore: <input id="chore" type="text" ><input id="add-chore" value="add" type="submit"></span>
+    </form>
+
+    <!-- Add Chore List -->
+    <div id="chore-list"></div>
 
 
-
-<script type="text/javascript" src="assets/js/login.js"></script>
+<script type="text/javascript" src="assets/js/app.js"></script>
 </body>
 </html>
