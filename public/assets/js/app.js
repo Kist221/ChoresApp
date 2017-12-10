@@ -13,30 +13,39 @@
  firebase.initializeApp(config);
 
 
-
-
-
-
-
-
 // LOGIN AUTH 
-// Sign in anonymously function
-firebase.auth().signInAnonymously().catch(function(error) {
-  var errorCode = error.code;
-  var errorMessage = error.message;
-  console.log(errorCode, errorMessage);
+// add click events for login/logout
+$("#btnLogin").on("click", function(){
+  // Sign in anonymously function
+  firebase.auth().signInAnonymously();
 });
 
+// click event for LOGOUT
+$("#btnLogout").on("click", function(){
+  // logout user
+  firebase.auth().signOut();
+});
+
+// calls function when user value is changed
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     // User is signed in.
     var isAnonymous = user.isAnonymous;
     var uid = user.uid;
-    console.log(isAnonymous, uid);
+    console.log(isAnonymous, uid, user);
+    // change login button
+    $("#btnLogout").attr("class", "");
+    $("#btnLogin").attr("class", "hidden");
   } else {
     // User is signed out.
+    // change login button
+    $("#btnLogout").attr("class", "hidden");
+    $("#btnLogin").attr("class", "");
   }
 });
+
+
+
 
 
 
