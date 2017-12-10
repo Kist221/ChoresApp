@@ -13,7 +13,7 @@
  firebase.initializeApp(config);
 
 
-// LOGIN AUTH 
+// LOGIN AUTH CODE
 // add click events for login/logout
 $("#btnLogin").on("click", function(){
   // Sign in anonymously function
@@ -45,6 +45,10 @@ firebase.auth().onAuthStateChanged(function(user) {
 });
 
 
+// DATABASE MANIPULATION FOR FIREBASE
+// reference firebase database
+var db = firebase.database();
+
 
 
 
@@ -61,17 +65,13 @@ $("#add-chore").on("click", function(event) {
 // Get the to-do "value" from the textbox and store it a variable
 var newChore = $("#chore").val().trim();
 
-
 // 
 var toDoChore = $("<p>");
-
   toDoChore.attr("id", "item-" + choreCount);
   toDoChore.append(" " + newChore);
 
-
 // 
 var choreClose = $("<button>");
-
   choreClose.attr("data-chore", choreCount);
   choreClose.addClass("checkbox");
   choreClose.append("&check;");
@@ -89,13 +89,13 @@ var choreClose = $("<button>");
   choreCount++;
 });
 
-   $(document.body).on("click", ".checkbox", function() {
 
-  // Get the number of the button from its data attribute and hold in a variable called  choreNumber.
-  var choreNumber = $(this).attr("data-chore");
-
-  // Select and Remove the specific <p> element that previously held the to do item number.
-  $("#item-" + choreNumber).remove();
+// Click event for closeout of tasks
+$(document.body).on("click", ".checkbox", function() {
+// Get the number of the button from its data attribute and hold in a variable called  choreNumber.
+var choreNumber = $(this).attr("data-chore");
+// Select and Remove the specific <p> element that previously held the to do item number.
+$("#item-" + choreNumber).remove();
 });
 
 
