@@ -49,19 +49,28 @@ firebase.auth().onAuthStateChanged(function(user) {
 // reference firebase database
 var db = firebase.database();
 
-
-
-
+// watch database and console log changes
+db.ref().on("value", function(snap) {
+  console.log(snap);
+});
 
 
 
 // Create an initial choreCount variable
 var choreCount = 0;
 
+
 //  On Click event associated with the add-chore function
 $("#add-chore").on("click", function(event) {
+  // prevent form submission
   event.preventDefault();
+  // run function to create new chore
+  createChore();
+});
 
+
+// creates chore from submit value
+var createChore = function(){
 // Get the to-do "value" from the textbox and store it a variable
 var newChore = $("#chore").val().trim();
 
@@ -87,7 +96,7 @@ var choreClose = $("<button>");
 
 // Add to the toDoCount
   choreCount++;
-});
+};
 
 
 // Click event for closeout of tasks
