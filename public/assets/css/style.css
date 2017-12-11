@@ -1,12 +1,12 @@
 
 /*Lets attempt to use just one stylesheet for both pages. Use CSS specificity!!!*/
 
-h1, h2, h3, h6, p, li, form, label, div {
-	font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+body {
+	background: #CFD6D7;
 }
 
-body {
-	background: lightgrey;
+h1 {
+	color: #5AD8ED;
 }
 
 
@@ -17,4 +17,36 @@ body {
 
 .hidden {
 	display: none;
+}
+
+#loginDiv {
+	margin: 2px;
+}
+
+
+
+/*  COLUMN SETUP  */
+.col {
+	display: block;
+	float:left;
+	margin: 1% 0 1% 1.6%;
+}
+.col:first-child { margin-left: 0; }
+
+/*  GROUPING  */
+.group:before,
+.group:after { content:""; display:table; }
+.group:after { clear:both;}
+.group { zoom:1; /* For IE 6/7 */ }
+
+
+/*  GRID OF THREE  */
+.span_3_of_3 { width: 100%; }
+.span_2_of_3 { width: 66.13%; }
+.span_1_of_3 { width: 32.26%; }
+
+/*  GO FULL WIDTH BELOW 480 PIXELS */
+@media only screen and (max-width: 480px) {
+	.col {  margin: 1% 0 1% 0%; }
+	.span_3_of_3, .span_2_of_3, .span_1_of_3 { width: 100%; }
 }
