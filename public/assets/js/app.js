@@ -59,21 +59,21 @@ db.ref().on("value", function(snap) {
 // Create an initial choreCount variable
 var choreCount = 0;
 
-// function to get chore value and clear input box
-var getChoreVal = function() {
-  // Get the to-do "value" from the textbox and store it a variable
-  var choreVal = $("#chore").val().trim();
-  // Clear the textbox when done
-  $("#chore").val("");
-  // return value
-  return choreVal;
-};
+// // function to get chore value and clear input box
+// var getChoreVal = function() {
+//   // Get the to-do "value" from the textbox and store it a variable
+//   var choreVal = $("#chore").val().trim();
+//   // Clear the textbox when done
+//   $("#chore").val("");
+//   // return value
+//   return choreVal;
+// };
 
 
 // creates chore from submit value
-var createChore = function() {
+var createChore = function(chore) {
   // create chore p item with data
-  var toDoChore = $("<p>").attr("id", "item-" + choreCount).append(" " + getChoreVal());
+  var toDoChore = $("<p>").attr("id", "item-" + choreCount).append(" " + chore.text);
   // create task close checkbox
   var choreClose = $("<button>").attr("data-chore", choreCount).addClass("checkbox").append("&check;");
   // Append the button to the to do item
@@ -92,13 +92,17 @@ var createChore = function() {
 $("#add-chore").on("click", function(event) {
   // prevent form submission
   event.preventDefault();
+  var choreVal = $("#chore").val().trim();
+  const choreId = Date.now()
+  const chore = {
+    text: choreVal,
+    id: choreId
+  }
   // run function to create new chore inside variable to push to server (testing)
-  var fbPush = createChore();
-  console.log(fbPush);
+  createChore(chore);
+  $("#chore").val("");
   // push data to database
-  db.ref(choreCount).set({
-    chore: fbPush
-  });
+  db.ref('chore-' + choreId).set(chore);
 });
 
 
