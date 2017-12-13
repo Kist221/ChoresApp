@@ -51,7 +51,7 @@ var db = firebase.database();
 
 // watch database and console log changes
 db.ref().on("value", function(snap) {
-  console.log(snap);
+  console.log(snap.val());
 });
 
 
@@ -59,44 +59,48 @@ db.ref().on("value", function(snap) {
 // Create an initial choreCount variable
 var choreCount = 0;
 
+// function to get chore value and clear input box
+var getChoreVal = function() {
+  // Get the to-do "value" from the textbox and store it a variable
+  var choreVal = $("#chore").val().trim();
+  // Clear the textbox when done
+  $("#chore").val("");
+  // return value
+  return choreVal;
+};
+
+
+// creates chore from submit value
+var createChore = function() {
+  // create chore p item with data
+  var toDoChore = $("<p>").attr("id", "item-" + choreCount).append(" " + getChoreVal());
+  // create task close checkbox
+  var choreClose = $("<button>").attr("data-chore", choreCount).addClass("checkbox").append("&check;");
+  // Append the button to the to do item
+  toDoChore = toDoChore.prepend(choreClose);
+  // Add the button and chore item to the chore-list div
+  $("#chore-list").append(toDoChore);
+  // Add to the toDoCount
+  choreCount++;
+  // return chore
+  return toDoChore;
+};
+
+
 
 //  On Click event associated with the add-chore function
 $("#add-chore").on("click", function(event) {
   // prevent form submission
   event.preventDefault();
-  // run function to create new chore
-  createChore();
+  // run function to create new chore inside variable to push to server (testing)
+  var fbPush = createChore();
+  console.log(fbPush);
+  // push data to database
+  db.ref(choreCount).set({
+    chore: fbPush
+  });
 });
 
-
-// creates chore from submit value
-var createChore = function(){
-// Get the to-do "value" from the textbox and store it a variable
-var newChore = $("#chore").val().trim();
-
-// 
-var toDoChore = $("<p>");
-  toDoChore.attr("id", "item-" + choreCount);
-  toDoChore.append(" " + newChore);
-
-// 
-var choreClose = $("<button>");
-  choreClose.attr("data-chore", choreCount);
-  choreClose.addClass("checkbox");
-  choreClose.append("&check;");
-
-// Append the button to the to do item
-  toDoChore = toDoChore.prepend(choreClose);
-
-// Add the button and chore item to the chore-list div
-  $("#chore-list").append(toDoChore);
-
-// Clear the textbox when done
-  $("#chore").val("");
-
-// Add to the toDoCount
-  choreCount++;
-};
 
 
 // Click event for closeout of tasks
