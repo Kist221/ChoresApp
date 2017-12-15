@@ -13,6 +13,11 @@
  firebase.initializeApp(config);
 
 
+
+
+
+
+
 // LOGIN AUTH CODE
 // add click events for login/logout
 $("#btnLogin").on("click", function(){
@@ -114,6 +119,55 @@ var choreNumber = $(this).attr("data-chore");
 // Select and Remove the specific <p> element that previously held the to do item number.
 $("#item-" + choreNumber).remove();
 });
+
+
+
+ // READ DATABASE AND PUBLISH TO PAGE
+
+
+//var fireText = document.getElementById("fireText");
+
+// var firebaseTextRef = firebase.database().ref().child("text");
+
+// firebaseTextRef.on('value', function(snapshot) {
+  // fireText.innerText = snapshot.val();
+  // console.log(snapshot.val());
+//}); 
+
+
+ // READ DATABASE AND PUBLISH TO PAGE pt.2
+
+  // USERS
+
+
+var rootRef = firebase.database().ref().child("users");
+
+rootRef.on("child_added" , snap => {
+
+var email = snap.child("email").val();
+var username = snap.child("username").val();
+
+$("#user-body").append("<div><p>" + email + "</p><p>" + username + "</p></div>");
+
+});
+
+
+ //CHORES
+
+var rootChoresRef = firebase.database().ref().child("chores");
+
+rootChoresRef.on("child_added" , snap => {
+
+var text = snap.child("text").val();
+var time = snap.child("time").val();
+
+$("#chores-body").prepend("<div><p>" + text + "</p><p>" + time + "</p></div>");
+});
+
+
+
+
+
 
 
 
