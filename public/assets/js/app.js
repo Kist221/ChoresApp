@@ -15,10 +15,6 @@ firebase.initializeApp(config);
 var uid;
 
 
-
-
-
-
 // LOGIN AUTH CODE
 // add click events for login/logout
 $("#btnLogin").on("click", function(){
@@ -49,6 +45,9 @@ firebase.auth().onAuthStateChanged(function(user) {
     $("#btnLogin").attr("class", "");
   }
 });
+
+
+
 
 
 // DATABASE MANIPULATION FOR FIREBASE
