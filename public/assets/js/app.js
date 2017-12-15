@@ -106,7 +106,7 @@ $("#add-chore").on("click", function(event) {
     owner: ""
   }
   // run function to create new chore inside variable to push to server (testing)
-  createChore(chore);
+  // createChore(chore);
   $("#chore").val("");
   // push data to database
   db.ref('/chores/' + timeNow).set(chore);
@@ -165,10 +165,17 @@ rootChoresRef.on("child_added" , snap => {
 
 var text = snap.child("text").val();
 var time = snap.child("time").val();
+var uidTime = Date.now();
 
-$("#chores-body").prepend("<div><p>" + text + "</p><p>" + time + "</p></div>");
+  // create chore p item with data
+  var toDoChore = $("<p>").attr("id", "item-" + uidTime).append(" Task: " + text + " Date: " + time);
+  // create task close checkbox
+  var choreClose = $("<button>").attr("data-chore", uidTime).addClass("checkbox").append("&check;");
+  // Append the button to the to do item
+  toDoChore = toDoChore.prepend(choreClose);
+
+$("#chores-body").prepend(toDoChore);
 });
-
 
 
 
