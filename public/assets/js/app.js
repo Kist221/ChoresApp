@@ -1,17 +1,18 @@
 // Javascript for App Page
 
 // Initialize Firebase
- var config = {
-   apiKey: "AIzaSyCVB25IfiYdoecRxag3WQlxtFkBAzqbcYs",
-   authDomain: "choresapp-18a57.firebaseapp.com",
-   databaseURL: "https://choresapp-18a57.firebaseio.com",
-   projectId: "choresapp-18a57",
-   storageBucket: "choresapp-18a57.appspot.com",
-   messagingSenderId: "451640314490"
- };
- 
- firebase.initializeApp(config);
+var config = {
+ apiKey: "AIzaSyCVB25IfiYdoecRxag3WQlxtFkBAzqbcYs",
+ authDomain: "choresapp-18a57.firebaseapp.com",
+ databaseURL: "https://choresapp-18a57.firebaseio.com",
+ projectId: "choresapp-18a57",
+ storageBucket: "choresapp-18a57.appspot.com",
+ messagingSenderId: "451640314490"
+};
 
+firebase.initializeApp(config);
+
+var uid;
 
 // LOGIN AUTH CODE
 // add click events for login/logout
@@ -31,7 +32,7 @@ firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     // User is signed in.
     var isAnonymous = user.isAnonymous;
-    var uid = user.uid;
+    uid = user.uid;
     console.log(isAnonymous, uid, user);
     // change login button
     $("#btnLogout").attr("class", "");
@@ -49,61 +50,63 @@ firebase.auth().onAuthStateChanged(function(user) {
 // reference firebase database
 var db = firebase.database();
 
-// watch database and console log changes
-db.ref().on("value", function(snap) {
-  console.log(snap.val());
-});
-
-
-
-// Create an initial choreCount variable
-var choreCount = 0;
-
-// // function to get chore value and clear input box
-// var getChoreVal = function() {
-//   // Get the to-do "value" from the textbox and store it a variable
-//   var choreVal = $("#chore").val().trim();
-//   // Clear the textbox when done
-//   $("#chore").val("");
-//   // return value
-//   return choreVal;
-// };
+// Create an initial timeNow variable
+var timeNow = Date.now();
 
 
 // creates chore from submit value
 var createChore = function(chore) {
   // create chore p item with data
-  var toDoChore = $("<p>").attr("id", "item-" + choreCount).append(" " + chore.text);
+  var toDoChore = $("<p>").attr("id", "item-" + timeNow).append(" " + chore.text);
   // create task close checkbox
-  var choreClose = $("<button>").attr("data-chore", choreCount).addClass("checkbox").append("&check;");
+  var choreClose = $("<button>").attr("data-chore", timeNow).addClass("checkbox").append("&check;");
   // Append the button to the to do item
   toDoChore = toDoChore.prepend(choreClose);
   // Add the button and chore item to the chore-list div
   $("#chore-list").append(toDoChore);
-  // Add to the toDoCount
-  choreCount++;
   // return chore
   return toDoChore;
 };
 
+
+var choresArray = [];
+
+// watch database and console log changes
+db.ref("chores").on("value", function(snap) {
+  // console.log(snap.val());
+  choresArray.push(snap.val());
+  // var newShit = choresArray.map(x => x.text);
+  console.log(choresArray);
+});
+
+
+// var myUid = firebase.auth().currentUser.uid;
 
 
 //  On Click event associated with the add-chore function
 $("#add-chore").on("click", function(event) {
   // prevent form submission
   event.preventDefault();
+  // update timestamp
+  timeNow = Date.now();
+  // store input value
   var choreVal = $("#chore").val().trim();
-  const choreId = Date.now()
+  // chore object
   const chore = {
     text: choreVal,
-    id: choreId
+    uid: uid,
+    time: moment().format("l"),
+    owner: ""
   }
   // run function to create new chore inside variable to push to server (testing)
   createChore(chore);
   $("#chore").val("");
   // push data to database
-  db.ref('chore-' + choreId).set(chore);
+  db.ref('/chores/' + timeNow).set(chore);
 });
+
+
+
 
 
 
