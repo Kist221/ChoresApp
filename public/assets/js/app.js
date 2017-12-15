@@ -55,7 +55,7 @@ var timeNow = Date.now();
 
 
 // creates chore from submit value
-var createChore = function(chore) {
+var createChore = function(text, uid, owner, createDate) {
   // create chore p item with data
   var toDoChore = $("<p>").attr("id", "item-" + timeNow).append(" " + chore.text);
   // create task close checkbox
@@ -73,10 +73,13 @@ var choresArray = [];
 
 // watch database and console log changes
 db.ref("chores").on("value", function(snap) {
-  // console.log(snap.val());
-  choresArray.push(snap.val());
-  // var newShit = choresArray.map(x => x.text);
-  console.log(choresArray);
+  // variable stores chores object
+  var chores = snap.val();
+  // loop through chores object and push 
+  for (var task in chores) {
+    console.log(chores[task]);
+    function(text, uid, )
+  }
 });
 
 
