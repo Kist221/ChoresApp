@@ -12,6 +12,8 @@ var config = {
 
 firebase.initializeApp(config);
 
+// reference firebase database
+var db = firebase.database();
 var uid;
 
 
@@ -48,45 +50,11 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 
 
-
-
 // DATABASE MANIPULATION FOR FIREBASE
-// reference firebase database
-var db = firebase.database();
+
 
 // Create an initial timeNow variable
 var timeNow = Date.now();
-
-
-// creates chore from submit value
-var createChore = function(chore) {
-  // create chore p item with data
-  var toDoChore = $("<p>").attr("id", "item-" + timeNow).append(" " + chore.text);
-  // create task close checkbox
-  var choreClose = $("<button>").attr("data-chore", timeNow).addClass("checkbox").append("&check;");
-  // Append the button to the to do item
-  toDoChore = toDoChore.prepend(choreClose);
-  // Add the button and chore item to the chore-list div
-  $("#chore-list").append(toDoChore);
-  // return chore
-  return toDoChore;
-};
-
-
-var choresArray = [];
-
-// watch database and console log changes
-db.ref("chores").on("value", function(snap) {
-  // variable stores chores object
-  var chores = snap.val();
-  // loop through chores object and push 
-  for (var each in chores) {
-    console.log(chores[each]);
-  }
-});
-
-
-// var myUid = firebase.auth().currentUser.uid;
 
 
 //  On Click event associated with the add-chore function
@@ -97,12 +65,13 @@ $("#add-chore").on("click", function(event) {
   timeNow = Date.now();
   // store input value
   var choreVal = $("#chore").val().trim();
-  // chore object
+  // chore object with data keys
   const chore = {
     text: choreVal,
-    uid: uid,
+    creatorUid: uid,
     time: moment().format("l"),
-    owner: ""
+    owner: "",
+    choreID: timeNow
   }
   // run function to create new chore inside variable to push to server (testing)
   // createChore(chore);
@@ -112,68 +81,32 @@ $("#add-chore").on("click", function(event) {
 });
 
 
-
-
-
-
 // Click event for closeout of tasks
 $(document.body).on("click", ".checkbox", function() {
 // Get the number of the button from its data attribute and hold in a variable called  choreNumber.
-var choreNumber = $(this).attr("data-chore");
+var choreNumber = $(this).attr("removeUid");
 // Select and Remove the specific <p> element that previously held the to do item number.
 $("#item-" + choreNumber).remove();
 });
 
 
-
- // READ DATABASE AND PUBLISH TO PAGE
-
-
-//var fireText = document.getElementById("fireText");
-
-// var firebaseTextRef = firebase.database().ref().child("text");
-
-// firebaseTextRef.on('value', function(snapshot) {
-  // fireText.innerText = snapshot.val();
-  // console.log(snapshot.val());
-//}); 
-
-
- // READ DATABASE AND PUBLISH TO PAGE pt.2
-
-  //Display USERS
-
-
-// var rootRef = firebase.database().ref().child("users");
-
-// rootRef.on("child_added" , snap => {
-
-// var email = snap.child("email").val();
-// var username = snap.child("username").val();
-
-// $("#user-body").append("<div><p>" + email + "</p><p>" + username + "</p></div>");
-
-// });
-
-
- //Display CHORES
-
+//Display CHORES
+// database reference for the chores child object
 var rootChoresRef = firebase.database().ref().child("chores");
-
+// when a child is added to chores object grab new snapshot
 rootChoresRef.on("child_added" , snap => {
-
-var text = snap.child("text").val();
-var time = snap.child("time").val();
-var uidTime = Date.now();
-
-  // create chore p item with data
-  var toDoChore = $("<p>").attr("id", "item-" + uidTime).append(" Task: " + text + "<br />Created: " + time);
+  // grab objects key values and store in variables 
+  var text = snap.child("text").val();
+  var time = snap.child("time").val();
+  var choreID = snap.child("choreID").val();
+  // create chore HTML object with variable data
+  var toDoChore = $("<p>").attr("id", "item-" + choreID).append(" Task: " + text + "<br />Created: " + time);
   // create task close checkbox
-  var choreClose = $("<button>").attr("data-chore", uidTime).addClass("checkbox").append("&check;");
-  // Append the button to the to do item
+  var choreClose = $("<button>").attr("removeUid", choreID).addClass("checkbox").append("&check;");
+  // Append the close checkbox to the HTML object
   toDoChore = toDoChore.prepend(choreClose);
-
-$("#chores-body").prepend(toDoChore);
+  // Prepend the HTML to page (so it displays on top)
+  $("#chores-body").prepend(toDoChore);
 });
 
 
@@ -185,3 +118,39 @@ $("#chores-body").prepend(toDoChore);
 
 
 
+//Display USERS
+// var rootRef = firebase.database().ref().child("users");
+// rootRef.on("child_added" , snap => {
+// var email = snap.child("email").val();
+// var username = snap.child("username").val();
+// $("#user-body").append("<div><p>" + email + "</p><p>" + username + "</p></div>");
+// });
+
+
+// // function creates chore from submit value
+// var createChore = function(chore) {
+//   // create chore p item with data
+//   var toDoChore = $("<p>").attr("id", "item-" + timeNow).append(" " + chore.text);
+//   // create task close checkbox
+//   var choreClose = $("<button>").attr("data-chore", timeNow).addClass("checkbox").append("&check;");
+//   // Append the button to the to do item
+//   toDoChore = toDoChore.prepend(choreClose);
+//   // Add the button and chore item to the chore-list div
+//   $("#chore-list").append(toDoChore);
+//   // return chore
+//   return toDoChore;
+// };
+
+// // array to store chores objects from db
+// var choresArray = [];
+
+// // watch database and console log changes
+// db.ref("chores").on("value", function(snap) {
+//   // variable stores chores object
+//   var chores = snap.val();
+//   // loop through chores object and push to choresArray
+//   for (var each in chores) {
+//     console.log(chores[each]);
+//     choresArray.push(chores[each]);
+//   }
+// });
