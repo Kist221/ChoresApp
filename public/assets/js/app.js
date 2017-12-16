@@ -49,14 +49,13 @@ firebase.auth().onAuthStateChanged(function(user) {
 });
 
 
-
 // DATABASE MANIPULATION FOR FIREBASE
 
 
 // Create an initial timeNow variable
 var timeNow = Date.now();
 
-
+// ADD chores to Database
 //  On Click event associated with the add-chore function
 $("#add-chore").on("click", function(event) {
   // prevent form submission
@@ -81,18 +80,7 @@ $("#add-chore").on("click", function(event) {
 });
 
 
-// Click event for closeout of tasks
-$(document.body).on("click", ".checkbox", function() {
-  // Get the number of the button from its data attribute and hold in a variable called removeUid.
-  var removeUid = $(this).attr("removeUid");
-  // Select and Remove the specific <p> element that previously held the to do item number.
-  $("#item-" + removeUid).remove();
-  // remove chore from database
-  db.ref("/chores/" + removeUid).remove();
-});
-
-
-//Display CHORES
+//Display CHORES on page
 // database reference for the chores child object
 var rootChoresRef = firebase.database().ref().child("chores");
 // when a child is added to chores object grab new snapshot
@@ -111,17 +99,26 @@ rootChoresRef.on("child_added" , snap => {
   $("#chores-body").prepend(toDoChore);
 });
 
+// Remove CHORES from page
 // watch for chores being removed to remove them from the page live
 rootChoresRef.on("child_removed" , snap => {
   // grab objects key values and store in variables 
-  var text = snap.child("text").val();
-  var time = snap.child("time").val();
   var choreID = snap.child("choreID").val();
   // Locate and remove
   $("#item-" + choreID).remove();
 });
 
 
+// Remove CHORES from database
+// Click event for closeout of tasks
+$(document.body).on("click", ".checkbox", function() {
+  // Get the number of the button from its data attribute and hold in a variable called removeUid.
+  var removeUid = $(this).attr("removeUid");
+  // // Select and Remove the specific <p> element that previously held the to do item number.
+  // $("#item-" + removeUid).remove();
+  // remove chore from database
+  db.ref("/chores/" + removeUid).remove();
+});
 
 
 
