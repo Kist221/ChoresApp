@@ -111,7 +111,15 @@ rootChoresRef.on("child_added" , snap => {
   $("#chores-body").prepend(toDoChore);
 });
 
-
+// watch for chores being removed to remove them from the page live
+rootChoresRef.on("child_removed" , snap => {
+  // grab objects key values and store in variables 
+  var text = snap.child("text").val();
+  var time = snap.child("time").val();
+  var choreID = snap.child("choreID").val();
+  // Locate and remove
+  $("#item-" + choreID).remove();
+});
 
 
 
