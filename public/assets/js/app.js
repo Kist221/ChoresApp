@@ -14,20 +14,22 @@ firebase.initializeApp(config);
 
 // reference firebase database
 var db = firebase.database();
-var uid;
-
+var uid = null;
 
 // LOGIN AUTH CODE
 // add click events for login/logout
 $("#btnLogin").on("click", function(){
   // Sign in anonymously function
   firebase.auth().signInAnonymously();
+  $("#myApplication").removeClass("hidden");
 });
 
 // click event for LOGOUT
 $("#btnLogout").on("click", function(){
   // logout user
   firebase.auth().signOut();
+  uid = null;
+  $("#myApplication").addClass("hidden");
 });
 
 // calls function when user value is changed
@@ -37,14 +39,14 @@ firebase.auth().onAuthStateChanged(function(user) {
     var isAnonymous = user.isAnonymous;
     uid = user.uid;
     console.log(isAnonymous, uid, user);
-    // change login button
-    $("#btnLogout").attr("class", "");
-    $("#btnLogin").attr("class", "hidden");
+    // change login display
+    $("#btnLogout, #myApplication").removeClass("hidden");
+    $("#btnLogin, #loginDiv").addClass("hidden");
   } else {
     // User is signed out.
-    // change login button
-    $("#btnLogout").attr("class", "hidden");
-    $("#btnLogin").attr("class", "");
+    // change login display
+    $("#btnLogout, #myApplication").addClass("hidden");
+    $("#btnLogin, #loginDiv").removeClass("hidden");
   }
 });
 
@@ -96,7 +98,7 @@ rootChoresRef.on("child_added" , snap => {
   // Append the close checkbox to the HTML object
   toDoChore = toDoChore.prepend(choreClose);
   // Prepend the HTML to page (so it displays on top)
-  $("#chores-body").prepend(toDoChore);
+  $("#chore-list").prepend(toDoChore);
 });
 
 // Remove CHORES from page
@@ -123,6 +125,45 @@ $(document.body).on("click", ".checkbox", function() {
 
 
 
+// // WEATHER API Implement
+
+// // This is our API key
+// var APIKey = "203a2fb913c904a5243dbe3fc02745b6";
+// // Variables for Geo Coord
+// var lat;
+// var lon;
+// // get Coordinates for Weather
+// navigator.geolocation.getCurrentPosition(function(position) {
+//   console.log(position);
+//   lat = position.coords.latitude;
+//   lon = position.coords.longitude;
+//   // URL we need to query the database
+//   var queryURL = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=" + APIKey;
+
+//   // Here we run our AJAX call to the OpenWeatherMap API
+//   $.ajax({
+//       url: queryURL,
+//       method: "GET"
+//     })
+//     // We store all of the retrieved data inside of an object called "response"
+//     .done(function(response) {
+//       // Log the queryURL
+//       console.log(queryURL);
+//       // Log the resulting object
+//       console.log(response);
+//       // Transfer content to HTML
+//       $(".city").html("<h4>Weather in " + response.name + ":</h4>");
+//       $(".wind").text("Wind Speed: " + response.wind.speed);
+//       $(".humidity").text("Humidity: " + response.main.humidity);
+//       $(".temp").text("Temperature (F) " + response.main.temp);
+//     });
+// });
+
+
+
+
+
+
 
 
 //Display USERS
@@ -133,31 +174,3 @@ $(document.body).on("click", ".checkbox", function() {
 // $("#user-body").append("<div><p>" + email + "</p><p>" + username + "</p></div>");
 // });
 
-
-// // function creates chore from submit value
-// var createChore = function(chore) {
-//   // create chore p item with data
-//   var toDoChore = $("<p>").attr("id", "item-" + timeNow).append(" " + chore.text);
-//   // create task close checkbox
-//   var choreClose = $("<button>").attr("data-chore", timeNow).addClass("checkbox").append("&check;");
-//   // Append the button to the to do item
-//   toDoChore = toDoChore.prepend(choreClose);
-//   // Add the button and chore item to the chore-list div
-//   $("#chore-list").append(toDoChore);
-//   // return chore
-//   return toDoChore;
-// };
-
-// // array to store chores objects from db
-// var choresArray = [];
-
-// // watch database and console log changes
-// db.ref("chores").on("value", function(snap) {
-//   // variable stores chores object
-//   var chores = snap.val();
-//   // loop through chores object and push to choresArray
-//   for (var each in chores) {
-//     console.log(chores[each]);
-//     choresArray.push(chores[each]);
-//   }
-// });
