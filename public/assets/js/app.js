@@ -83,10 +83,12 @@ $("#add-chore").on("click", function(event) {
 
 // Click event for closeout of tasks
 $(document.body).on("click", ".checkbox", function() {
-// Get the number of the button from its data attribute and hold in a variable called  choreNumber.
-var choreNumber = $(this).attr("removeUid");
-// Select and Remove the specific <p> element that previously held the to do item number.
-$("#item-" + choreNumber).remove();
+  // Get the number of the button from its data attribute and hold in a variable called removeUid.
+  var removeUid = $(this).attr("removeUid");
+  // Select and Remove the specific <p> element that previously held the to do item number.
+  $("#item-" + removeUid).remove();
+  // remove chore from database
+  db.ref("/chores/" + removeUid).remove();
 });
 
 
