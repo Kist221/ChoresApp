@@ -33,10 +33,6 @@
 	<a class="navbar-brand" href="#">
 		<h1>COLLAB.</h1>
 	</a>
-	<!-- Login button -->
-	<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="btnLogin">
-	  Sign In
-	</button>
 	<!-- Log Out button -->
 	<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="btnLogout">
 	  Sign Out
@@ -44,14 +40,22 @@
 </nav>
 
 
+
+
 <div id="loginDiv" class="hidden">	
-	<form>
-		<label>Email: <input type="type" name="Email"></label>
+	<form id="loginForm">
+		<label>Email: <input type="type" name="Email" id="emailInput"></label>
 		<br />
-		<label>Password: <input type="password" name="Password"></label>
-		<input type="submit" name="Submit" value="Login">
+		<label>Password: <input type="password" name="Password" id="passInput"></label>
+		<!-- Button for LOGIN -->
+		<input type="submit" name="Submit" value="Login" id="btnLogin">
+		<!-- Button for SIGN UP -->
+		<input type="submit" name="Sign Up" value="Sign Up" id="btnSignup">
 	</form>
 </div>
+
+
+
 
 <div id="myApplication" class="hidden">
 
