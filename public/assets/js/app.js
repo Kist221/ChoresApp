@@ -14,6 +14,7 @@ firebase.initializeApp(config);
 
 // reference firebase database
 var db = firebase.database();
+// UID IS FOR TASK REFERENCE (CHANGE TO DISPLAY NAME LATER)
 var uid = null;
 
 // LOGIN AUTH CODE
@@ -42,9 +43,19 @@ $("#btnLogout").on("click", function(){
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     // User is signed in.
-    var isAnonymous = user.isAnonymous;
+    var user = firebase.auth().currentUser;
+    var name, email, photoUrl, emailVerified;
+
+    name = user.displayName;
+    email = user.email;
+    photoUrl = user.photoURL;
+    emailVerified = user.emailVerified;
+
+    console.log(name, email, photoUrl, emailVerified);
+
+    // store uid for task reference (CHANGE TO DISPLAY NAME LATER)
     uid = user.uid;
-    console.log(isAnonymous, uid, user);
+    console.log(user);
     // change login display
     $("#btnLogout, #myApplication").removeClass("hidden");
     $("#btnLogin, #loginDiv").addClass("hidden");
@@ -60,9 +71,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 // Function to SIGN IN
 function handleSignIn() {
   if (firebase.auth().currentUser) {
-    // [START signout]
+    // signout
     firebase.auth().signOut();
-    // [END signout]
   } else {
     var email = document.getElementById('emailInput').value;
     var password = document.getElementById('passInput').value;
@@ -75,26 +85,19 @@ function handleSignIn() {
       return;
     }
     // Sign in with email and pass.
-    // [START authwithemail]
     firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
-      // [START_EXCLUDE]
       if (errorCode === 'auth/wrong-password') {
         alert('Wrong password.');
       } else {
         alert(errorMessage);
       }
       console.log(error);
-      document.getElementById('btnLogin').disabled = false;
-      // [END_EXCLUDE]
     });
-    // [END authwithemail]
   }
-  document.getElementById('btnLogin').disabled = true;
 };
-
 
 // Function to SIGN UP
 function handleSignUp() {
@@ -125,6 +128,11 @@ function handleSignUp() {
   });
   // [END createwithemail]
 }
+
+
+
+
+
 
 
 // DATABASE MANIPULATION FOR FIREBASE
