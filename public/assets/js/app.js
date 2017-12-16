@@ -141,22 +141,22 @@ $("#item-" + choreNumber).remove();
 
  // READ DATABASE AND PUBLISH TO PAGE pt.2
 
-  // USERS
+  //Display USERS
 
 
-var rootRef = firebase.database().ref().child("users");
+// var rootRef = firebase.database().ref().child("users");
 
-rootRef.on("child_added" , snap => {
+// rootRef.on("child_added" , snap => {
 
-var email = snap.child("email").val();
-var username = snap.child("username").val();
+// var email = snap.child("email").val();
+// var username = snap.child("username").val();
 
-$("#user-body").append("<div><p>" + email + "</p><p>" + username + "</p></div>");
+// $("#user-body").append("<div><p>" + email + "</p><p>" + username + "</p></div>");
 
-});
+// });
 
 
- //CHORES
+ //Display CHORES
 
 var rootChoresRef = firebase.database().ref().child("chores");
 
@@ -167,7 +167,7 @@ var time = snap.child("time").val();
 var uidTime = Date.now();
 
   // create chore p item with data
-  var toDoChore = $("<p>").attr("id", "item-" + uidTime).append(" Task: " + text + " Date: " + time);
+  var toDoChore = $("<p>").attr("id", "item-" + uidTime).append(" Task: " + text + "<br />Created: " + time);
   // create task close checkbox
   var choreClose = $("<button>").attr("data-chore", uidTime).addClass("checkbox").append("&check;");
   // Append the button to the to do item
