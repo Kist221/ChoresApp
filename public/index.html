@@ -8,14 +8,15 @@
 
 	<!-- reset CSS -->
 	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
-	<!-- Bootstrap -->
+	<!-- jquery  -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<!-- Bootstrap CSS & JS-->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<!-- google font -->
 	<link href="https://fonts.googleapis.com/css?family=Cabin|Hind" rel="stylesheet">
 	<!-- App CSS -->
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
-	<!-- jquery  -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<!-- FireBase -->
 	<script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
 	<!-- moment -->
@@ -40,20 +41,40 @@
 </nav>
 
 
+<!-- MODAL FOR ERRORS -->
+<div id="errorModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h5 id="errorMessage"></h4>
+  </div>
+</div>
 
 
 <div id="loginDiv" class="hidden">	
+	<!-- FORM FOR SIGN UP & LOGIN -->
 	<form id="loginForm">
-		<label>Email: <input type="type" name="Email" id="emailInput"></label>
+		<label>Email: <input type="email" name="Email" id="emailInput"></label>
 		<br />
 		<label>Password: <input type="password" name="Password" id="passInput"></label>
+		<br />
 		<!-- Button for LOGIN -->
 		<input type="submit" name="Submit" value="Login" id="btnLogin">
 		<!-- Button for SIGN UP -->
 		<input type="submit" name="Sign Up" value="Sign Up" id="btnSignup">
 	</form>
+
 </div>
 
+<!-- USERNAME MODAL -->
+<div id="usernameModal" class="modal">
+	<div class="modal-content">
+		<span class="close">&times;</span>
+		<form>
+			<label>Choose A Username: <input type="password" name="Password" id="passInput"></label>
+			<input type="submit" name="Submit" value="Login" id="btnUsername">
+		</form>
+	</div>
+</div>
 
 
 
