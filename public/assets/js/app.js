@@ -17,6 +17,7 @@ var db = firebase.database();
 // UID IS FOR TASK REFERENCE (CHANGE TO DISPLAY NAME LATER)
 var uid = null;
 
+
 // LOGIN AUTH CODE
 // click event for LOGIN
 $("#loginForm").on("click", "#btnLogin", function(){
@@ -44,14 +45,16 @@ firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     // User is signed in.
     var user = firebase.auth().currentUser;
-    var name, email, photoUrl, emailVerified;
-
+    var name, email;
+    // store current user data
     name = user.displayName;
     email = user.email;
-    photoUrl = user.photoURL;
-    emailVerified = user.emailVerified;
+    console.log(name, email);
+    // If user has no Username
+    if (name === null) {
+      // promt for username
 
-    console.log(name, email, photoUrl, emailVerified);
+    }
 
     // store uid for task reference (CHANGE TO DISPLAY NAME LATER)
     uid = user.uid;
@@ -68,6 +71,19 @@ firebase.auth().onAuthStateChanged(function(user) {
 });
 
 
+// Function to display errors in modal
+function errorMessage(error) {
+  // push error message to error modal
+  $("#errorMessage").text(error);
+  // display modal
+  $("#errorModal").modal('show');
+};
+// Close Modal on clicking X
+$("#errorModal").on("click", ".close", function() {
+  $("#errorModal").modal('hide');
+})
+
+
 // Function to SIGN IN
 function handleSignIn() {
   if (firebase.auth().currentUser) {
@@ -77,11 +93,11 @@ function handleSignIn() {
     var email = document.getElementById('emailInput').value;
     var password = document.getElementById('passInput').value;
     if (email.length < 4) {
-      alert('Please enter an email address.');
+      errorMessage('Please enter an email address.');
       return;
     }
     if (password.length < 4) {
-      alert('Please enter a password.');
+      errorMessage('Please enter a password.');
       return;
     }
     // Sign in with email and pass.
@@ -90,9 +106,9 @@ function handleSignIn() {
       var errorCode = error.code;
       var errorMessage = error.message;
       if (errorCode === 'auth/wrong-password') {
-        alert('Wrong password.');
+        errorMessage('Wrong Password');
       } else {
-        alert(errorMessage);
+        errorMessage(errorMessage);
       }
       console.log(error);
     });
@@ -104,42 +120,35 @@ function handleSignUp() {
   var email = document.getElementById('emailInput').value;
   var password = document.getElementById('passInput').value;
   if (email.length < 4) {
-    alert('Please enter an email address.');
+    errorMessage('Please enter an email address.');
     return;
   }
   if (password.length < 4) {
-    alert('Please enter a password.');
+    errorMessage('Please enter a password.');
     return;
   }
-  // Sign in with email and pass.
-  // [START createwithemail]
+  // Sign Up and Login with email and pass.
   firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
     // Handle Errors here.
     var errorCode = error.code;
     var errorMessage = error.message;
-    // [START_EXCLUDE]
+    // check if error is weak password
     if (errorCode == 'auth/weak-password') {
-      alert('The password is too weak.');
+      errorMessage('The password is too weak.');
     } else {
-      alert(errorMessage);
+      errorMessage(errorMessage);
     }
     console.log(error);
-    // [END_EXCLUDE]
   });
-  // [END createwithemail]
-}
-
-
+};
 
 
 
 
 
 // DATABASE MANIPULATION FOR FIREBASE
-
 // Create an initial timeNow variable
 var timeNow = Date.now();
-
 // ADD chores to Database
 //  On Click event associated with the add-chore function
 $("#add-chore").on("click", function(event) {
@@ -193,20 +202,22 @@ rootChoresRef.on("child_removed" , snap => {
   $("#item-" + choreID).remove();
 });
 
-
 // Remove CHORES from database
 // Click event for closeout of tasks
 $(document.body).on("click", ".checkbox", function() {
   // Get the number of the button from its data attribute and hold in a variable called removeUid.
   var removeUid = $(this).attr("removeUid");
-  // // Select and Remove the specific <p> element that previously held the to do item number.
-  // $("#item-" + removeUid).remove();
   // remove chore from database
   db.ref("/chores/" + removeUid).remove();
 });
 
 
 
+
+
+
+
+// UNCOMMENT ME FOR FINAL PROJECT
 
 // // WEATHER API Implement
 
@@ -244,16 +255,4 @@ $(document.body).on("click", ".checkbox", function() {
 
 
 
-
-
-
-
-
-//Display USERS
-// var rootRef = firebase.database().ref().child("users");
-// rootRef.on("child_added" , snap => {
-// var email = snap.child("email").val();
-// var username = snap.child("username").val();
-// $("#user-body").append("<div><p>" + email + "</p><p>" + username + "</p></div>");
-// });
 
