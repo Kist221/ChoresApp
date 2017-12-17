@@ -154,23 +154,28 @@ var timeNow = Date.now();
 $("#add-chore").on("click", function(event) {
   // prevent form submission
   event.preventDefault();
-  // update timestamp
-  timeNow = Date.now();
-  // store input value
-  var choreVal = $("#chore").val().trim();
-  // chore object with data keys
-  const chore = {
-    text: choreVal,
-    creatorUid: uid,
-    time: moment().format("l"),
-    owner: "",
-    choreID: timeNow
+  // prevent empty input
+  if ($("#chore").val().trim() !== "") {
+    // update timestamp
+    timeNow = Date.now();
+    // store input value
+    var choreVal = $("#chore").val().trim();
+    // chore object with data keys
+    const chore = {
+      text: choreVal,
+      creatorUid: uid,
+      time: moment().format("l"),
+      owner: "",
+      choreID: timeNow
+    }
+    // run function to create new chore inside variable to push to server (testing)
+    // createChore(chore);
+    $("#chore").val("");
+    // push data to database
+    db.ref('/chores/' + timeNow).set(chore);
+  } else {
+    errorMessage('Please Input A Task');
   }
-  // run function to create new chore inside variable to push to server (testing)
-  // createChore(chore);
-  $("#chore").val("");
-  // push data to database
-  db.ref('/chores/' + timeNow).set(chore);
 });
 
 
