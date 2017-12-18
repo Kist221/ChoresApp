@@ -16,7 +16,7 @@ firebase.initializeApp(config);
 var db = firebase.database();
 // UID IS FOR TASK REFERENCE (CHANGE TO DISPLAY NAME LATER)
 var uid = null;
-
+var user;
 
 // LOGIN AUTH CODE
 // click event for LOGIN
@@ -38,27 +38,40 @@ $("#btnLogout").on("click", function(){
   // logout user
   firebase.auth().signOut();
   uid = null;
+  $("#currentUser").empty();
 });
 
 // calls function when user value is changed
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     // User is signed in.
-    var user = firebase.auth().currentUser;
-    var name, email;
-    // store current user data
-    name = user.displayName;
-    email = user.email;
-    console.log(name, email);
+    user = firebase.auth().currentUser;
+    console.log(user);
+    var name = user.displayName;
     // If user has no Username
     if (name === null) {
-      // promt for username
-
+      // show username modal
+      $("#usernameModal").modal('show');
+      // get value of username input on submit button click
+      $("#usernameModal").on("click", "#btnUsername", function() {
+        // ALWAYS PREVENT DEFAULT
+        event.preventDefault();
+        // get value
+        uid = $("#usernameInput").val();
+        console.log(uid);
+        // push username to user profile
+        updateUsername(uid);
+        // hide modal
+        $("#usernameModal").modal('hide');
+        // display current username on page
+        $("#currentUser").text(uid);
+      });
+    } else {
+      $("#currentUser").text(name);
+      // store display name for task reference
+      uid = name;
+      console.log(uid);
     }
-
-    // store uid for task reference (CHANGE TO DISPLAY NAME LATER)
-    uid = user.uid;
-    console.log(user);
     // change login display
     $("#btnLogout, #myApplication").removeClass("hidden");
     $("#btnLogin, #loginDiv").addClass("hidden");
@@ -70,6 +83,20 @@ firebase.auth().onAuthStateChanged(function(user) {
   }
 });
 
+// Function to update username
+function updateUsername(input) {
+  var user = firebase.auth().currentUser;
+  // update username
+  user.updateProfile({
+    displayName: input
+  }).then(function() {
+    // Update successful.
+    console.log("Username Updated");
+  }).catch(function(error) {
+    // An error happened.
+    console.log(error);
+  });
+};
 
 // Function to display errors in modal
 function errorMessage(error) {
@@ -78,11 +105,11 @@ function errorMessage(error) {
   // display modal
   $("#errorModal").modal('show');
 };
-// Close Modal on clicking X
-$("#errorModal").on("click", ".close", function() {
-  $("#errorModal").modal('hide');
-})
 
+// Close Modal on clicking X
+$(".modal").on("click", ".close", function() {
+  $(".modal").modal('hide');
+})
 
 // Function to SIGN IN
 function handleSignIn() {
@@ -145,7 +172,6 @@ function handleSignUp() {
 
 
 
-
 // DATABASE MANIPULATION FOR FIREBASE
 // Create an initial timeNow variable
 var timeNow = Date.now();
@@ -173,7 +199,8 @@ $("#add-chore").on("click", function(event) {
     $("#chore").val("");
     // push data to database
     db.ref('/chores/' + timeNow).set(chore);
-  } else {
+  // Display error if user input blank
+  } else if ($("#chore").val().trim() !== "") {
     errorMessage('Please Input A Task');
   }
 });
@@ -186,10 +213,11 @@ var rootChoresRef = firebase.database().ref().child("chores");
 rootChoresRef.on("child_added" , snap => {
   // grab objects key values and store in variables 
   var text = snap.child("text").val();
+  var creatorUid = snap.child("creatorUid").val();
   var time = snap.child("time").val();
   var choreID = snap.child("choreID").val();
   // create chore HTML object with variable data
-  var toDoChore = $("<p>").attr("id", "item-" + choreID).append(" Task: " + text + "<br />Created: " + time);
+  var toDoChore = $("<p>").attr("id", "item-" + choreID).append("<strong> " + text + "</strong><br />Created By: " + creatorUid + " on " + time);
   // create task close checkbox
   var choreClose = $("<button>").attr("removeUid", choreID).addClass("checkbox").append("&check;");
   // Append the close checkbox to the HTML object
