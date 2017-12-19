@@ -8,34 +8,45 @@
 
 	<!-- reset CSS -->
 	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+
 	<!-- jquery  -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 	<!-- Bootstrap CSS & JS-->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+	
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	
 	<!-- google font -->
 	<link href="https://fonts.googleapis.com/css?family=Cabin|Hind" rel="stylesheet">
+	
 	<!-- App CSS -->
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	
 	<!-- FireBase -->
 	<script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
+	
 	<!-- moment -->
  	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.4/moment.min.js"></script>
+ 	
  	<!-- Material Design Lite -->
  	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.brown-blue.min.css" />
+	
 	<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
 </head>
 
 <body>
 
 <!-- Nav Bar Header -->
-<nav class="navbar navbar-dark bg-dark">
-	<a class="navbar-brand" href="#">
-		<h1>COLLAB.</h1>
-	</a>
+<nav class="navbar navbar-light" style="background-color: #E4E9EF;">
+	<a class="navbar-brand">
+		<h3>collab.</h3></a>
+
 	<!-- container to display current user logged in -->
 	<h3 id="currentUser"></h3>
+
 	<!-- Log Out button -->
 	<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="btnLogout">
 	  Sign Out
@@ -55,10 +66,10 @@
 <div id="loginDiv" class="hidden">	
 	<!-- FORM FOR SIGN UP & LOGIN -->
 	<form id="loginForm">
-		<label>Email: <input type="email" name="Email" id="emailInput"></label>
+		<label><h4>Email:</h4><input type="email" name="Email" id="emailInput"></label>
 		<br />
-		<label>Password: <input type="password" name="Password" id="passInput"></label>
-		<br />
+		<label><h4>Password:</h4><input type="password" name="Password" id="passInput"></label>
+		<br /><br />
 		<!-- Button for LOGIN -->
 		<input type="submit" name="Submit" value="Login" id="btnLogin">
 		<!-- Button for SIGN UP -->
@@ -90,9 +101,10 @@
 			<div class="choreBox" id="mychore-list">
 				
 				<form>
-				<span>Add Task: <br> <input id="chore" type="text"> 
+				<span><h4>Add Task: </h4> <input id="chore" type="text"> 
 				<input id="add-chore" value="add" type="submit"></span>
 				</form>
+				<br />
 			
 				<!-- container for chores to populate -->
 				<div id="chore-list"></div>
