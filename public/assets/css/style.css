@@ -2,12 +2,29 @@
 /*Lets attempt to use just one stylesheet for both pages. Use CSS specificity!!!*/
 
 body {
-	background: #CFD6D7;
+    background-image: url("../images/yellow-metal-design-decoration.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-color: #ffffff;
 }
 
-h1 {
-	color: #5AD8ED;
+
+.navbar {
+    opacity: 0.5;
+    filter: alpha(opacity=50); 
 }
+
+h3 {
+	color: #000000;
+    letter-spacing: 2px;
+}
+
+h4 {
+    color: #484A4B;
+}
+
 
 
 #chore-list {
@@ -18,6 +35,33 @@ h1 {
 .hidden {
 	display: none;
 }
+
+#loginForm {
+    margin: 25px 50px;
+}
+
+#btnLogin {
+    background-color: #484A4B;
+    border: none;
+    color: white;
+    padding: 10px 26px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+#btnSignup {
+    background-color: #484A4B;
+    border: none;
+    color: white;
+    padding: 10px 26px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
 
 
 /* Modal Content */
