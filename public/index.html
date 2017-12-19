@@ -40,10 +40,13 @@
 <body>
 
 <!-- Nav Bar Header -->
-
 <nav class="navbar navbar-light" style="background-color: #E4E9EF;">
 	<a class="navbar-brand">
 		<h3>collab.</h3></a>
+
+	<!-- container to display current user logged in -->
+	<h3 id="currentUser"></h3>
+
 	<!-- Log Out button -->
 	<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="btnLogout">
 	  Sign Out
@@ -80,8 +83,8 @@
 	<div class="modal-content">
 		<span class="close">&times;</span>
 		<form>
-			<label>Choose A Username: <input type="password" name="Password" id="passInput"></label>
-			<input type="submit" name="Submit" value="Login" id="btnUsername">
+			<label>Please Choose A Username: <input type="user" name="Password" id="usernameInput"></label>
+			<input type="submit" name="Submit" value="Submit" id="btnUsername">
 		</form>
 	</div>
 </div>
