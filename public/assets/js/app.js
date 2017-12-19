@@ -200,7 +200,7 @@ $("#add-chore").on("click", function(event) {
     // push data to database
     db.ref('/chores/' + timeNow).set(chore);
   // Display error if user input blank
-  } else if ($("#chore").val().trim() !== "") {
+  } else if ($("#chore").val().trim() === "") {
     errorMessage('Please Input A Task');
   }
 });
