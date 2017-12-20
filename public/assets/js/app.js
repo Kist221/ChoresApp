@@ -194,8 +194,7 @@ $("#add-chore").on("click", function(event) {
       owner: "",
       choreID: timeNow
     }
-    // run function to create new chore inside variable to push to server (testing)
-    // createChore(chore);
+    // clear input 
     $("#chore").val("");
     // push data to database
     db.ref('/chores/' + timeNow).set(chore);
@@ -206,9 +205,10 @@ $("#add-chore").on("click", function(event) {
 });
 
 
-//Display CHORES on page
 // database reference for the chores child object
 var rootChoresRef = firebase.database().ref().child("chores");
+
+//Display CHORES on page
 // when a child is added to chores object grab new snapshot
 rootChoresRef.on("child_added" , snap => {
   // grab objects key values and store in variables 
@@ -222,8 +222,33 @@ rootChoresRef.on("child_added" , snap => {
   var choreClose = $("<button>").attr("removeUid", choreID).addClass("checkbox").append("&check;");
   // Append the close checkbox to the HTML object
   toDoChore = toDoChore.prepend(choreClose);
-  // Prepend the HTML to page (so it displays on top)
-  $("#chore-list").prepend(toDoChore);
+  console.log(snap.child("owner").val());
+  // Check if owner and display accordingly
+  if (snap.child("owner").val() === "") {
+    console.log("no owner" + snap.child("owner").val());
+    // Prepend the HTML to page (so it displays on top)
+    $("#chore-list").prepend(toDoChore);
+  } else {
+    console.log("false owner isnt blank");
+    // add to owned chore list
+    $("#owned-list").prepend(toDoChore);
+  }
+});
+
+// Move chores once claimed originally
+rootChoresRef.on("child_changed" , snap => {
+  var choreID = snap.child("choreID").val();
+  var owner = snap.child("owner").val();
+  console.log(choreID, owner);
+  // check if owner is set
+  if (snap.child("owner") === "") {
+    console.log("no owner");
+  } else {
+    console.log("owner");
+    var taskHTML = $("#item-" + choreID);
+    console.log("html = " + taskHTML);
+    $("#owned-list").prepend(taskHTML);
+  }
 });
 
 // Remove CHORES from page
@@ -240,8 +265,15 @@ rootChoresRef.on("child_removed" , snap => {
 $(document.body).on("click", ".checkbox", function() {
   // Get the number of the button from its data attribute and hold in a variable called removeUid.
   var removeUid = $(this).attr("removeUid");
-  // remove chore from database
-  db.ref("/chores/" + removeUid).remove();
+  if (db.ref("/chores/" + removeUid + "/owner") !== "") {
+    console.log("true" + db.ref("/chores/" + removeUid + "/owner"));
+    // remove chore from database
+    db.ref("/chores/" + removeUid).remove();
+  } else {
+    console.log("false" + db.ref("/chores/" + removeUid + "/owner"));
+    // set chore owner in database to current user
+    db.ref("/chores/" + removeUid + "/owner").set(uid);
+  };
 });
 
 
@@ -252,7 +284,7 @@ $(document.body).on("click", ".checkbox", function() {
 
 // UNCOMMENT ME FOR FINAL PROJECT
 
-// // WEATHER API Implement
+// WEATHER API Implement
 
 // // This is our API key
 // var APIKey = "203a2fb913c904a5243dbe3fc02745b6";
