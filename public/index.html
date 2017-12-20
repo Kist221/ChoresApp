@@ -40,15 +40,13 @@
 <body>
 
 <!-- Nav Bar Header -->
-<nav class="navbar navbar-light" style="background-color: #E4E9EF;">
-	<a class="navbar-brand">
-		<h3>collab.</h3></a>
-
+<nav class="navbar navbar-trans navbar-inverse">
+	<a class="navbar-brand" href="#"><h3>Collab.</h3></a>
 	<!-- container to display current user logged in -->
-	<h3 id="currentUser"></h3>
+	<h3 id="currentUser">Karl Marx</h3>
 
 	<!-- Log Out button -->
-	<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="btnLogout">
+	<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="btnLogout" data-upgraded=",MaterialButton">
 	  Sign Out
 	</button>
 </nav>
@@ -58,7 +56,7 @@
 <div id="errorModal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
-    <h5 id="errorMessage"></h4>
+    <h4 id="errorMessage"></h4>
   </div>
 </div>
 
@@ -101,13 +99,33 @@
 			<div class="choreBox" id="mychore-list">
 				
 				<form>
-				<span><h4>Add Task: </h4> <input id="chore" type="text"> 
+				<span><h4>Add Task: </h4><input id="chore" type="text"> 
 				<input id="add-chore" value="add" type="submit"></span>
 				</form>
 				<br />
 			
 				<!-- container for chores to populate -->
 				<div id="chore-list"></div>
+
+			</div>
+
+		</div>
+
+		<div class="col span_2_of_3">
+			
+			<div class="choreBox" id="owned-list">
+
+
+
+			</div>
+
+		</div>
+
+		<div class="col span_3_of_3">
+			
+			<div class="choreBox" id="completed-list">
+
+
 
 			</div>
 

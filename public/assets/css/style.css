@@ -2,23 +2,23 @@
 /*Lets attempt to use just one stylesheet for both pages. Use CSS specificity!!!*/
 
 body {
-    background-image: url("../images/yellow-metal-design-decoration.jpg");
+    background-image: url("../images/pexels-photo-281260.jpeg");
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
+    max-width: 100%;
     background-color: #ffffff;
 }
 
 
-.navbar {
+/*.navbar {
     opacity: 0.5;
     filter: alpha(opacity=50); 
-}
+}*/
 
 h3 {
 	color: #000000;
-    letter-spacing: 2px;
 }
 
 h4 {
@@ -37,7 +37,7 @@ h4 {
 }
 
 #loginForm {
-    margin: 25px 50px;
+/*    margin: 25px 50px; */
 }
 
 #btnLogin {
@@ -93,6 +93,7 @@ h4 {
 
 
  /*  COLUMN SETUP  */
+
 .col {
 	display: block;
 	float:left;
@@ -117,5 +118,6 @@ h4 {
 	.col {  margin: 1% 0 1% 0%; }
 	.span_3_of_3, .span_2_of_3, .span_1_of_3 { width: 100%; }
 }
+ */
 
 
