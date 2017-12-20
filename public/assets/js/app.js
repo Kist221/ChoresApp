@@ -210,7 +210,7 @@ $("#add-chore").on("click", function(event) {
 var rootChoresRef = firebase.database().ref().child("chores");
 
 //Display CHORES on page
-// when a child is added to chores object grab new snapshot
+// when a child is added or page refreshed grab new snapshot
 rootChoresRef.on("child_added" , snap => {
   // grab objects key values and store in variables 
   var text = snap.child("text").val();
@@ -225,19 +225,21 @@ rootChoresRef.on("child_added" , snap => {
   var choreClose = $("<button>").attr("removeUid", choreID).addClass("checkbox").append("&check;");
   // Append the close checkbox to the HTML object
   toDoChore = toDoChore.prepend(choreClose);
-  console.log(snap.child("owner").val());
   // Check if owner and display accordingly
   if (owner === "") {
     console.log("no owner");
     // Prepend the HTML to page (so it displays on top)
     $("#chore-list").prepend(toDoChore);
   } else if (owner !== "" && completed === false) {
-    console.log("owner but not completed");
+    console.log("owner= " + owner + " but not completed");
+    // create owner display
+    var displayOwner = $("<h6>").text("Owner: " + owner);
+    toDoChore = toDoChore.prepend(displayOwner);
     // add to owned chore list
     $("#owned-list").prepend(toDoChore);
   } else if (owner !== "" && completed === true) {
     console.log("task completed");
-    // add to owned chore list
+    // add to completed chore list
     $("#completed-list").prepend(toDoChore);
   }
 });
@@ -247,18 +249,20 @@ rootChoresRef.on("child_changed" , snap => {
   var choreID = snap.child("choreID").val();
   var owner = snap.child("owner").val();
   var completed = snap.child("completed").val();
-  console.log(choreID, owner, completed);
   // check if owner is set
   if (owner === "") {
     console.log("no owner");
   } else if (owner !== "" && completed === false) {
-    console.log("owner and not completed");
+    console.log("owner= " + owner + " and not completed");
     // store task html in var
     var taskHTML = $("#item-" + choreID);
+    // create owner display
+    var displayOwner = $("<h6>").text("Owner: " + owner);
+    taskHTML = taskHTML.prepend(displayOwner);
     // move task html to owned div
     $("#owned-list").prepend(taskHTML);
   } else if (owner !== "" && completed === true) {
-    console.log("owner and completed");
+    console.log("completed");
     // store task html in var
     var taskHTML = $("#item-" + choreID);
     // move task html to completed div
