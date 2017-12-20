@@ -192,7 +192,8 @@ $("#add-chore").on("click", function(event) {
       creatorUid: uid,
       time: moment().format("l"),
       owner: "",
-      choreID: timeNow
+      choreID: timeNow,
+      completed: false
     }
     // clear input 
     $("#chore").val("");
@@ -216,6 +217,8 @@ rootChoresRef.on("child_added" , snap => {
   var creatorUid = snap.child("creatorUid").val();
   var time = snap.child("time").val();
   var choreID = snap.child("choreID").val();
+  var owner = snap.child("owner").val();
+  var completed = snap.child("completed").val();
   // create chore HTML object with variable data
   var toDoChore = $("<p>").attr("id", "item-" + choreID).append("<strong> " + text + "</strong><br />Created By: " + creatorUid + " on " + time);
   // create task close checkbox
@@ -224,7 +227,7 @@ rootChoresRef.on("child_added" , snap => {
   toDoChore = toDoChore.prepend(choreClose);
   console.log(snap.child("owner").val());
   // Check if owner and display accordingly
-  if (snap.child("owner").val() === "") {
+  if (owner === "") {
     console.log("no owner" + snap.child("owner").val());
     // Prepend the HTML to page (so it displays on top)
     $("#chore-list").prepend(toDoChore);
@@ -239,15 +242,23 @@ rootChoresRef.on("child_added" , snap => {
 rootChoresRef.on("child_changed" , snap => {
   var choreID = snap.child("choreID").val();
   var owner = snap.child("owner").val();
-  console.log(choreID, owner);
+  var completed = snap.child("completed").val();
+  console.log(choreID, owner, completed);
   // check if owner is set
-  if (snap.child("owner") === "") {
+  if (owner === "") {
     console.log("no owner");
-  } else {
-    console.log("owner");
+  } else if (owner !== "" && completed === false) {
+    console.log("owner and not completed");
+    // store task html in var
     var taskHTML = $("#item-" + choreID);
-    console.log("html = " + taskHTML);
+    // move task html to owned div
     $("#owned-list").prepend(taskHTML);
+  } else if (owner !== "" && completed === true) {
+    console.log("owner and completed");
+    // store task html in var
+    var taskHTML = $("#item-" + choreID);
+    // move task html to completed div
+    $("#completed-list").prepend(taskHTML);
   }
 });
 
@@ -260,24 +271,21 @@ rootChoresRef.on("child_removed" , snap => {
   $("#item-" + choreID).remove();
 });
 
-// Remove CHORES from database
-// Click event for closeout of tasks
-$(document.body).on("click", ".checkbox", function() {
+// Move CHORES to owned div  #1
+// Click event for unowned tasks
+$("#chore-list").on("click", ".checkbox", function() {
   // Get the number of the button from its data attribute and hold in a variable called removeUid.
   var removeUid = $(this).attr("removeUid");
-  if (db.ref("/chores/" + removeUid + "/owner") !== "") {
-    console.log("true" + db.ref("/chores/" + removeUid + "/owner"));
-    // remove chore from database
-    db.ref("/chores/" + removeUid).remove();
-  } else {
-    console.log("false" + db.ref("/chores/" + removeUid + "/owner"));
-    // set chore owner in database to current user
-    db.ref("/chores/" + removeUid + "/owner").set(uid);
-  };
+  db.ref("/chores/" + removeUid + "/owner").set(uid);
 });
 
-
-
+// Move CHORES to completed div  #2
+// Click event for unowned tasks
+$("#owned-list").on("click", ".checkbox", function() {
+  // Get the number of the button from its data attribute and hold in a variable called removeUid.
+  var removeUid = $(this).attr("removeUid");
+  db.ref("/chores/" + removeUid + "/completed").set(true);
+});
 
 
 
