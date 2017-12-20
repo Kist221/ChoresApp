@@ -284,14 +284,20 @@ $("#chore-list").on("click", ".checkbox", function() {
 });
 
 // Move CHORES to completed div  #2
-// Click event for unowned tasks
+// Click event for owned tasks
 $("#owned-list").on("click", ".checkbox", function() {
   // Get the number of the button from its data attribute and hold in a variable called removeUid.
   var removeUid = $(this).attr("removeUid");
   db.ref("/chores/" + removeUid + "/completed").set(true);
 });
 
-
+// Delete CHORES in completed div from database  #3
+// Click event for completed tasks
+$("#completed-list").on("click", ".checkbox", function() {
+  // Get the number of the button from its data attribute and hold in a variable called removeUid.
+  var removeUid = $(this).attr("removeUid");
+  db.ref("/chores/" + removeUid).remove();
+});
 
 
 // UNCOMMENT ME FOR FINAL PROJECT
