@@ -228,13 +228,17 @@ rootChoresRef.on("child_added" , snap => {
   console.log(snap.child("owner").val());
   // Check if owner and display accordingly
   if (owner === "") {
-    console.log("no owner" + snap.child("owner").val());
+    console.log("no owner");
     // Prepend the HTML to page (so it displays on top)
     $("#chore-list").prepend(toDoChore);
-  } else {
-    console.log("false owner isnt blank");
+  } else if (owner !== "" && completed === false) {
+    console.log("owner but not completed");
     // add to owned chore list
     $("#owned-list").prepend(toDoChore);
+  } else if (owner !== "" && completed === true) {
+    console.log("task completed");
+    // add to owned chore list
+    $("#completed-list").prepend(toDoChore);
   }
 });
 
