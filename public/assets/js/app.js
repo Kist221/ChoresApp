@@ -131,11 +131,11 @@ function handleSignIn() {
     firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
-      var errorMessage = error.message;
+      var errorText = error.message;
       if (errorCode === 'auth/wrong-password') {
         errorMessage('Wrong Password');
       } else {
-        errorMessage(errorMessage);
+        errorMessage(errorText);
       }
       console.log(error);
     });
@@ -158,12 +158,12 @@ function handleSignUp() {
   firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
     // Handle Errors here.
     var errorCode = error.code;
-    var errorMessage = error.message;
+    var errorText = error.message;
     // check if error is weak password
     if (errorCode == 'auth/weak-password') {
       errorMessage('The password is too weak.');
     } else {
-      errorMessage(errorMessage);
+      errorMessage(errorText);
     }
     console.log(error);
   });
