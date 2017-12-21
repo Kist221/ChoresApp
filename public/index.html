@@ -1,7 +1,10 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<title>Application Page</title>
+
+<html lang="en" ng-app="chatApp">
+
+	<head>
+
+	<title>Project One</title>
 
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -18,41 +21,48 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	
 	<!-- google font -->
-	<link href="https://fonts.googleapis.com/css?family=Cabin|Hind" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Oxygen" rel="stylesheet">
 	
 	<!-- App CSS -->
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 	
 	<!-- FireBase -->
 	<script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
+
+	<!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+
+    <!-- AngularFire -->
+    <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
 	
 	<!-- moment -->
  	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.4/moment.min.js"></script>
  	
  	<!-- Material Design Lite -->
  	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-	<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.brown-blue.min.css" />
+	<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue-pink.min.css" />
 	
 	<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 
-</head>
+	<link rel="manifest" href="/manifest.json">
 
-<body>
+	</head>
 
-<!-- Nav Bar Header -->
+<body ng-controller="ChatController">
+
+	<!-- Nav Bar Header -->
 <nav class="navbar navbar-trans navbar-inverse">
-	<a class="navbar-brand" href="#"><h3>Collab.</h3></a>
+	<a class="navbar-brand" href="#">
+		<h3>Collab.</h3></a>
 	<!-- container to display current user logged in -->
-	<h3 id="currentUser"></h3>
-
+		<h3 id="currentUser"></h3>
 	<!-- Log Out button -->
 	<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="btnLogout">
 	  Sign Out
 	</button>
 </nav>
 
-
-<!-- MODAL FOR ERRORS -->
+	<!-- MODAL FOR ERRORS -->
 <div id="errorModal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
@@ -60,90 +70,97 @@
   </div>
 </div>
 
+	<!-- USER ADMIN CONTENT -->
 
-<div id="loginDiv" class="hidden">	
-	<!-- FORM FOR SIGN UP & LOGIN -->
-	<form id="loginForm">
-		<label><h4>Email:</h4><input type="email" name="Email" id="emailInput"></label>
-		<br />
-		<label><h4>Password:</h4><input type="password" name="Password" id="passInput"></label>
-		<br /><br />
-		<!-- Button for LOGIN -->
-		<input type="submit" name="Submit" value="Login" id="btnLogin">
-		<!-- Button for SIGN UP -->
-		<input type="submit" name="Sign Up" value="Sign Up" id="btnSignup">
-	</form>
+<div class="container">	
+	 <div class="row">
+		<div class="col-md-6">
 
-</div>
 
-<!-- USERNAME MODAL -->
-<div id="usernameModal" class="modal">
-	<div class="modal-content">
-		<span class="close">&times;</span>
-		<form>
-			<label>Please Choose A Username: <input type="user" name="Password" id="usernameInput"></label>
-			<input type="submit" name="Submit" value="Submit" id="btnUsername">
+	<div id="loginDiv" class="hidden">	
+			<!-- FORM FOR SIGN UP & LOGIN -->
+		<form id="loginForm">
+			<label><h5>Email:</h5><input type="email" name="Email" id="emailInput"></label>
+			<br />
+			<label><h5>Password:</h5><input type="password" name="Password" id="passInput"></label>
+			<br /><br />
+			<!-- Button for LOGIN -->
+			<input type="submit" name="Submit" value="Login" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="btnLogin">
+			<!-- Button for SIGN UP -->
+			<input type="submit" name="Sign Up" value="Sign Up" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="btnSignup">
 		</form>
+
+		</div>
 	</div>
-</div>
+</div> 
 
 
+	<!-- USERNAME MODAL -->
+	<div id="usernameModal" class="modal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<form>
+				<label>Please Choose A Username: <input type="user" name="Password" id="usernameInput"></label>
+				<input type="submit" name="Submit" value="Submit" id="btnUsername">
+			</form>
+		</div>
+	</div>
 
-<div id="myApplication" class="hidden">
 
-	<div class="section group">
+	<!-- ADD TASK DIV -->
 
-		<!-- My Chore List -->
-		<div class="col span_1_of_3">
-			
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-4">
 			<div class="choreBox" id="mychore-list">
-				
 				<form>
-				<span><h4>Add Task: </h4><input id="chore" type="text"> 
-				<input id="add-chore" value="add" type="submit"></span>
+				<span><h5>Add Task:</h5>
+				<input id="chore" type="text"> 
+					<input id="add-chore" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" value="add" type="submit">
+				</span>
 				</form>
 				<br />
-			
-				<!-- container for chores to populate -->
 				<div id="chore-list"></div>
-
 			</div>
-
 		</div>
 
-		<div class="col span_2_of_3">
-			
+	<div class="col-md-4">
 			<div class="choreBox" id="owned-list">
-
-
-
-			</div>
-
 		</div>
-
-		<div class="col span_3_of_3">
-			
-			<div class="choreBox" id="completed-list">
-
-
-
-			</div>
-
-		</div>
-
 	</div>
 
+	<!-- CHAT MESSAGING -->	
 
-	<!-- Div to display weather -->
-	<div class="weatherDiv">
-		<div class="city"></div>
-		<div class="temp"></div>
-		<div class="humidity"></div>
-		<div class="wind"></div>
+	<div class="col-md-4">
+    		<form>
+        		<span><h5>Chat:</h5>
+                    <input type="text" ng-model="messageText">
+                	<button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" ng-click="send()">Send</button>
+                </span>
+            </form>
+              <p ng-repeat="m in messages">{{m.username}}: {{m.message}} - {{m.date | date:'short'}}
+             </p>
 	</div>
-
 </div>
 
-<script type="text/javascript" src="assets/js/app.js"></script>
-</body>
+<div class="container">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="choreBox" id="completed-list">
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+	<script type="text/javascript" src="assets/js/app.js"></script>
+
+	</body>
+
 </html>
