@@ -109,38 +109,39 @@
 
 	<!-- ADD TASK DIV -->
 
+<div id="myApplication" class="hidden">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="choreBox" id="mychore-list">
+					<form>
+					<span><h5>Add Task:</h5>
+					<input id="chore" type="text"> 
+						<input id="add-chore" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" value="add" type="submit">
+					</span>
+					</form>
+					<br />
+					<div id="chore-list"></div>
+				</div>
+			</div>
 
-<div class="container">
-	<div class="row">
 		<div class="col-md-4">
-			<div class="choreBox" id="mychore-list">
-				<form>
-				<span><h5>Add Task:</h5>
-				<input id="chore" type="text"> 
-					<input id="add-chore" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" value="add" type="submit">
-				</span>
-				</form>
-				<br />
-				<div id="chore-list"></div>
+				<div class="choreBox" id="owned-list">
 			</div>
 		</div>
 
-	<div class="col-md-4">
-			<div class="choreBox" id="owned-list">
+		<!-- CHAT MESSAGING -->	
+
+		<div class="col-md-4">
+	    		<form>
+	        		<span><h5>Chat:</h5>
+	                    <input type="text" ng-model="messageText">
+	                	<button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" ng-click="send()">Send</button>
+	                </span>
+	            </form>
+	              <p ng-repeat="m in messages">{{m.username}}: {{m.message}} - {{m.date | date:'short'}}
+	             </p>
 		</div>
-	</div>
-
-	<!-- CHAT MESSAGING -->	
-
-	<div class="col-md-4">
-    		<form>
-        		<span><h5>Chat:</h5>
-                    <input type="text" ng-model="messageText">
-                	<button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" ng-click="send()">Send</button>
-                </span>
-            </form>
-              <p ng-repeat="m in messages">{{m.username}}: {{m.message}} - {{m.date | date:'short'}}
-             </p>
 	</div>
 </div>
 
@@ -148,15 +149,18 @@
 	<div class="row">
 		<div class="col-md-6">
 			<div class="choreBox" id="completed-list">
+			</div>
 		</div>
 	</div>
 </div>
 
-
-
-
-
-
+<!-- Div to display weather -->
+<div class="weatherDiv">		
+ 		<div class="city"></div>		
+ 		<div class="temp"></div>		
+ 		<div class="humidity"></div>		
+ 		<div class="wind"></div>		
+ </div>
 
 
 	<script type="text/javascript" src="assets/js/app.js"></script>
