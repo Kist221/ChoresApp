@@ -230,6 +230,7 @@ rootChoresRef.on("child_added" , snap => {
     console.log("no owner");
     // Prepend the HTML to page (so it displays on top)
     $("#chore-list").prepend(toDoChore);
+  // if has owner but not complete
   } else if (owner !== "" && completed === false) {
     console.log("owner= " + owner + " but not completed");
     // create owner display
@@ -237,6 +238,7 @@ rootChoresRef.on("child_added" , snap => {
     toDoChore = toDoChore.prepend(displayOwner);
     // add to owned chore list
     $("#owned-list").prepend(toDoChore);
+  // if has owner and is completed
   } else if (owner !== "" && completed === true) {
     console.log("task completed");
     // create completed by display
@@ -259,12 +261,13 @@ rootChoresRef.on("child_changed" , snap => {
   // create chore HTML object with variable data
   var toDoChore = $("<p>").attr("id", "item-" + choreID).append("<strong> " + text + "</strong><br />Created By: " + creatorUid + " on " + time);
   // create task close checkbox
-  var choreClose = $("<button>").attr("removeUid", choreID).addClass("checkbox").append("&check;");
+  var choreClose = $("<button class='mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab'>").attr("removeUid", choreID).addClass("checkbox").append("&check;");
   // Append the close checkbox to the HTML object
   toDoChore = toDoChore.prepend(choreClose);
   // check if owner is set
   if (owner === "") {
     console.log("no owner");
+  // if has owner but NOT completed
   } else if (owner !== "" && completed === false) {
     console.log("owner= " + owner + " and not completed");
     // store task html in var
@@ -274,6 +277,7 @@ rootChoresRef.on("child_changed" , snap => {
     taskHTML = taskHTML.prepend(displayOwner);
     // move task html to owned div
     $("#owned-list").prepend(taskHTML);
+  // if has owner and IS completed
   } else if (owner !== "" && completed === true) {
     console.log("completed");
     // remove task html
@@ -318,6 +322,7 @@ $("#completed-list").on("click", ".checkbox", function() {
   var removeUid = $(this).attr("removeUid");
   db.ref("/chores/" + removeUid).remove();
 });
+
 
 var app = angular.module("chatApp", ['firebase']);
 
