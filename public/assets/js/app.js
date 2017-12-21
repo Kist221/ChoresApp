@@ -240,7 +240,7 @@ rootChoresRef.on("child_added" , snap => {
   } else if (owner !== "" && completed === true) {
     console.log("task completed");
     // create completed by display
-    var completedBy = $("<h6>").text("Completed By: " + owner);
+    var completedBy = $("<h5>").text("Completed By: " + owner);
     toDoChore = toDoChore.prepend(completedBy);
     // add to completed chore list
     $("#completed-list").prepend(toDoChore);
@@ -270,7 +270,7 @@ rootChoresRef.on("child_changed" , snap => {
     // store task html in var
     var taskHTML = $("#item-" + choreID);
     // create owner display
-    var displayOwner = $("<h6>").text("Owner: " + owner);
+    var displayOwner = $("<h5>").text("Owner: " + owner);
     taskHTML = taskHTML.prepend(displayOwner);
     // move task html to owned div
     $("#owned-list").prepend(taskHTML);
@@ -279,7 +279,7 @@ rootChoresRef.on("child_changed" , snap => {
     // remove task html
     $("#item-" + choreID).remove();
     // create completed by display
-    var completedBy = $("<h6>").text("Completed By: " + owner);
+    var completedBy = $("<h5>").text("Completed By: " + owner);
     toDoChore = toDoChore.prepend(completedBy);
     // move task html to completed div
     $("#completed-list").prepend(toDoChore);
