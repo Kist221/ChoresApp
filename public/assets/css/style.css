@@ -9,20 +9,19 @@ body {
     background-position: center;
     max-width: 100%;
     background-color: #ffffff;
+    font-family: 'Oxygen', sans-serif;
 }
 
+h1 .navbar-brand {
+    color: #000000;
+}
 
-/*.navbar {
-    opacity: 0.5;
-    filter: alpha(opacity=50); 
-}*/
-
-h3 {
+h3  {
 	color: #000000;
 }
 
 h4 {
-    color: #484A4B;
+    color: #000000;
 }
 
 

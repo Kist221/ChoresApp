@@ -222,7 +222,7 @@ rootChoresRef.on("child_added" , snap => {
   // create chore HTML object with variable data
   var toDoChore = $("<p>").attr("id", "item-" + choreID).append("<strong> " + text + "</strong><br />Created By: " + creatorUid + " on " + time);
   // create task close checkbox
-  var choreClose = $("<button>").attr("removeUid", choreID).addClass("checkbox").append("&check;");
+  var choreClose = $("<button class='mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab'>").attr("removeUid", choreID).addClass("checkbox").append("&check;");
   // Append the close checkbox to the HTML object
   toDoChore = toDoChore.prepend(choreClose);
   // Check if owner and display accordingly
@@ -233,7 +233,7 @@ rootChoresRef.on("child_added" , snap => {
   } else if (owner !== "" && completed === false) {
     console.log("owner= " + owner + " but not completed");
     // create owner display
-    var displayOwner = $("<h6>").text("Owner: " + owner);
+    var displayOwner = $("<h5>").text("Owner: " + owner);
     toDoChore = toDoChore.prepend(displayOwner);
     // add to owned chore list
     $("#owned-list").prepend(toDoChore);
@@ -318,6 +318,21 @@ $("#completed-list").on("click", ".checkbox", function() {
   var removeUid = $(this).attr("removeUid");
   db.ref("/chores/" + removeUid).remove();
 });
+
+var app = angular.module("chatApp", ['firebase']);
+
+app.controller("ChatController", function($scope, $firebaseArray) {
+ var ref = firebase.database().ref().child("messages");
+ $scope.messages = $firebaseArray(ref);
+
+ $scope.send = function() {
+   $scope.messages.$add({
+     message: $scope.messageText,
+     username: uid,
+     date: Date.now()
+   })
+ }
+})
 
 
 // UNCOMMENT ME FOR FINAL PROJECT
