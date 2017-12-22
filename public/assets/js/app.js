@@ -312,6 +312,7 @@ $("#chore-list").on("click", ".checkbox", function() {
 $("#owned-list").on("click", ".checkbox", function() {
   // Get the number of the button from its data attribute and hold in a variable called removeUid.
   var removeUid = $(this).attr("removeUid");
+  // set task as complete
   db.ref("/chores/" + removeUid + "/completed").set(true);
 });
 
@@ -323,7 +324,11 @@ $("#completed-list").on("click", ".checkbox", function() {
   db.ref("/chores/" + removeUid).remove();
 });
 
+// return firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+//   var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
+// });
 
+// Chat Application Using Angular JS
 var app = angular.module("chatApp", ['firebase']);
 
 app.controller("ChatController", function($scope, $firebaseArray) {
@@ -340,8 +345,7 @@ app.controller("ChatController", function($scope, $firebaseArray) {
 })
 
 
-
-
+// weather API
 // This is our API key
 var APIKey = "203a2fb913c904a5243dbe3fc02745b6";
 // Variables for Geo Coord
