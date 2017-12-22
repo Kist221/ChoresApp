@@ -345,10 +345,7 @@ app.controller("ChatController", function($scope, $firebaseArray) {
 })
 
 
-// UNCOMMENT ME FOR FINAL PROJECT
-
-// WEATHER API Implement
-
+// weather API
 // This is our API key
 var APIKey = "203a2fb913c904a5243dbe3fc02745b6";
 // Variables for Geo Coord
