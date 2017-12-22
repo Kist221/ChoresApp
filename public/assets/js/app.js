@@ -340,41 +340,39 @@ app.controller("ChatController", function($scope, $firebaseArray) {
 })
 
 
-// UNCOMMENT ME FOR FINAL PROJECT
 
-// WEATHER API Implement
 
-// // This is our API key
-// var APIKey = "203a2fb913c904a5243dbe3fc02745b6";
-// // Variables for Geo Coord
-// var lat;
-// var lon;
-// // get Coordinates for Weather
-// navigator.geolocation.getCurrentPosition(function(position) {
-//   console.log(position);
-//   lat = position.coords.latitude;
-//   lon = position.coords.longitude;
-//   // URL we need to query the database
-//   var queryURL = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=" + APIKey;
+// This is our API key
+var APIKey = "203a2fb913c904a5243dbe3fc02745b6";
+// Variables for Geo Coord
+var lat;
+var lon;
+// get Coordinates for Weather
+navigator.geolocation.getCurrentPosition(function(position) {
+  console.log(position);
+  lat = position.coords.latitude;
+  lon = position.coords.longitude;
+  // URL we need to query the database
+  var queryURL = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=" + APIKey;
 
-//   // Here we run our AJAX call to the OpenWeatherMap API
-//   $.ajax({
-//       url: queryURL,
-//       method: "GET"
-//     })
-//     // We store all of the retrieved data inside of an object called "response"
-//     .done(function(response) {
-//       // Log the queryURL
-//       console.log(queryURL);
-//       // Log the resulting object
-//       console.log(response);
-//       // Transfer content to HTML
-//       $(".city").html("<h4>Weather in " + response.name + ":</h4>");
-//       $(".wind").text("Wind Speed: " + response.wind.speed);
-//       $(".humidity").text("Humidity: " + response.main.humidity);
-//       $(".temp").text("Temperature (F) " + response.main.temp);
-//     });
-// });
+  // Here we run our AJAX call to the OpenWeatherMap API
+  $.ajax({
+      url: queryURL,
+      method: "GET"
+    })
+    // We store all of the retrieved data inside of an object called "response"
+    .done(function(response) {
+      // Log the queryURL
+      console.log(queryURL);
+      // Log the resulting object
+      console.log(response);
+      // Transfer content to HTML
+      $(".city").html("<h4>Weather in " + response.name + ":</h4>");
+      $(".wind").text("Wind Speed: " + response.wind.speed);
+      $(".humidity").text("Humidity: " + response.main.humidity);
+      $(".temp").text("Temperature (F) " + response.main.temp);
+    });
+});
 
 
 
