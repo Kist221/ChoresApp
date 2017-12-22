@@ -52,14 +52,17 @@
 
 	<!-- Nav Bar Header -->
 <nav class="navbar navbar-trans navbar-inverse">
-	<a class="navbar-brand" href="#">
-		<h1>Collab.</h1></a>
-	<!-- container to display current user logged in -->
-		<h3 id="currentUser"></h3>
-	<!-- Log Out button -->
-	<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="btnLogout">
-	  Sign Out
-	</button>
+	<div class="container">
+		<a class="navbar-brand" href="#">
+			<h1>Collab.</h1></a>
+		<!-- container to display current user logged in -->
+			<h3 id="currentUser"></h3>
+		<!-- Log Out button -->
+		<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="btnLogout">
+		  Sign Out
+		</button>
+	</div>
+
 </nav>
 
 	<!-- MODAL FOR ERRORS -->
@@ -70,9 +73,27 @@
   </div>
 </div>
 
+
+
 	<!-- USER ADMIN CONTENT -->
 
-<div class="container">	
+<div class="container">
+
+
+
+			<!-- Div to display weather -->
+	<div class="jumbotron">
+		<div class="weatherDiv">		
+		 		<div class="city"></div>		
+		 		<div class="temp"></div>		
+		 		<div class="humidity"></div>		
+		 		<div class="wind"></div>		
+		 </div>
+	</div>
+		
+
+
+
 	 <div class="row">
 		<div class="col-md-6">
 
@@ -154,13 +175,6 @@
 	</div>
 </div>
 
-<!-- Div to display weather -->
-<div class="weatherDiv">		
- 		<div class="city"></div>		
- 		<div class="temp"></div>		
- 		<div class="humidity"></div>		
- 		<div class="wind"></div>		
- </div>
 
 
 	<script type="text/javascript" src="assets/js/app.js"></script>
