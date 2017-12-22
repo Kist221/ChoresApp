@@ -324,10 +324,6 @@ $("#completed-list").on("click", ".checkbox", function() {
   db.ref("/chores/" + removeUid).remove();
 });
 
-// return firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
-//   var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
-// });
-
 // Chat Application Using Angular JS
 var app = angular.module("chatApp", ['firebase']);
 
